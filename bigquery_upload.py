@@ -19,7 +19,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/koppo/Downloads/valued-
 
 client = bigquery.Client()
 PROJECT_ID = "valued-ceiling-454014-a9"
-DATASET_ID = "sample"
+DATASET_ID = "sam1"
 dataset_ref = f"{PROJECT_ID}.{DATASET_ID}"
 try:
     client.get_dataset(dataset_ref)

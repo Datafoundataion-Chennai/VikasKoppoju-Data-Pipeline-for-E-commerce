@@ -1,20 +1,46 @@
 import pandas as pd
 import numpy as np
-
+import re
 def infer_object_type(series):
     """Infer if an object-type column is a date, time, or timestamp."""
+    # print("-----------------Infer function Started---------------")
+    # print(series)
+    # print("-----------------series ended---------------")
+
+    # First, try direct conversion using Pandas
     try:
-        parsed_col = pd.to_datetime(series, errors="coerce")  
-        if parsed_col.notna().all():
-            if parsed_col.dt.time.nunique() > 1 and parsed_col.dt.date.nunique() > 1:
-                return "TIMESTAMP"
-            elif parsed_col.dt.time.nunique() > 1:
-                return "TIME"
-            else:
-                return "DATE"
+        parsed_series = pd.to_datetime(series, errors="coerce", format="%Y-%m-%d %H:%M:%S")
+        if parsed_series.notna().all():
+            return "TIMESTAMP"
     except Exception:
-        pass
-    return "STRING"
+        pass  # If conversion fails, continue with regex-based approach
+
+    date_pattern = r"^\d{4}-\d{2}-\d{2}$"  # Matches "YYYY-MM-DD"
+    time_pattern = r"^\d{2}:\d{2}(:\d{2})?$"  # Matches "HH:MM" or "HH:MM:SS"
+    timestamp_pattern = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$"  # Matches "YYYY-MM-DD HH:MM:SS"
+
+    for value in series.dropna().astype(str):
+        if re.match(timestamp_pattern, value):
+            return "TIMESTAMP"
+        elif re.match(date_pattern, value):
+            return "DATE"
+        elif re.match(time_pattern, value):
+            return "TIME"
+
+    return "STRING"  # Default if no match is found
+  # Default if no match is found
+    # try:
+    #     parsed_col = pd.to_datetime(series, errors="coerce")  
+    #     if parsed_col.notna().all():
+    #         if parsed_col.dt.time.nunique() > 1 and parsed_col.dt.date.nunique() > 1:
+    #             return "TIMESTAMP"
+    #         elif parsed_col.dt.time.nunique() > 1:
+    #             return "TIME"
+    #         else:
+    #             return "DATE"
+    # except Exception:
+    #     pass
+    # return "STRING"
 
 def download_and_clean_data(csv_path):
     """Downloads dataset, cleans it, and returns a DataFrame with inferred schema."""
@@ -24,31 +50,37 @@ def download_and_clean_data(csv_path):
     df.dropna(how="all", inplace=True)
     df.drop_duplicates(inplace=True)
 
-    for col in df.columns:
-        try:
-            df[col] = pd.to_numeric(df[col]) 
-        except ValueError:  
-            pass  
-
-    # Type mapping
-    type_mapping = {
-        "int64": "INTEGER",
-        "float64": "FLOAT64",
-        "bool": "BOOLEAN",
-        "object": "STRING"
-    }
-
+    # Infer schema
     schema_dict = {}
     for col in df.columns:
+        try:
+            df[col] = pd.to_numeric(df[col])  # Convert numerical columns
+        except ValueError:
+            pass  
+
         dtype = str(df[col].dtype)
         if dtype == "object":
-            schema_dict[col] = infer_object_type(df[col])
-        else:
-            schema_dict[col] = type_mapping.get(dtype, "STRING")
+            inferred_type = infer_object_type(df[col])
+            schema_dict[col] = inferred_type
+            print(f"if object {schema_dict[col]}")
+            
+            # Ensure TIMESTAMP columns are converted
+            if inferred_type == "TIMESTAMP":
+                df[col] = pd.to_datetime(df[col], errors="coerce", format="%Y-%m-%d %H:%M:%S")
 
+        else:
+            schema_dict[col] = {
+                "int64": "INTEGER",
+                "float64": "FLOAT64",
+                "bool": "BOOLEAN"
+            }.get(dtype, "STRING")
+            print(f"if not {schema_dict[col]}")
+
+    # Convert FLOAT64 columns explicitly
     float_columns = [col for col, dtype in schema_dict.items() if dtype == "FLOAT64"]
     df[float_columns] = df[float_columns].astype(np.float64)
 
+    # Ensure NaN values are handled correctly
     df = df.where(pd.notnull(df), None)
 
     print(f"✅ Data cleaned and schema inferred: {schema_dict}")

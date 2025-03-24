@@ -1,10 +1,1531 @@
-2025-03-24 09:46:02,261 - INFO - Streamlit app started
-2025-03-24 09:46:02,287 - INFO - Displayed Metrics - Total Orders:    total_orders
+2025-03-24 12:28:42,310 - INFO - Streamlit app started
+2025-03-24 12:28:42,333 - INFO - Displayed Metrics - Total Orders:    total_orders
 0         99441, Total Revenue:    total_revenue
 0    16008872.12, Total Customers:    total_customers
 0            96096, Avg Order Value:    avg_order_value
 0       160.990267
-2025-03-24 09:46:02,287 - INFO - Fetching Orders Over Time Data
-2025-03-24 09:46:02,288 - INFO - Fetched Orders Over Time Data
-2025-03-24 09:46:02,349 - INFO - Fetching Revenue Over Time Data
-2025-03-24 09:46:02,350 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:28:42,335 - INFO - Fetching Orders Over Time Data
+2025-03-24 12:28:42,337 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:28:42,384 - INFO - Fetching Revenue Over Time Data
+2025-03-24 12:28:42,385 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:34:23,291 - INFO - Streamlit app started
+2025-03-24 12:34:23,303 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 12:34:23,303 - INFO - Fetching Orders Over Time Data
+2025-03-24 12:34:23,304 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:34:23,332 - INFO - Fetching Revenue Over Time Data
+2025-03-24 12:34:23,333 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:45:34,216 - INFO - Streamlit app started
+2025-03-24 12:45:34,250 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 12:45:34,250 - INFO - Fetching Orders Over Time Data
+2025-03-24 12:45:34,251 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:45:37,468 - INFO - Fetching Revenue Over Time Data
+2025-03-24 12:45:37,469 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:47:24,514 - INFO - Streamlit app started
+2025-03-24 12:47:24,552 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 12:47:24,552 - INFO - Fetching Orders Over Time Data
+2025-03-24 12:47:24,555 - INFO - Fetched Orders Over Time Data
+2025-03-24 12:47:26,413 - INFO - Fetching Revenue Over Time Data
+2025-03-24 12:47:26,414 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:03:50,987 - INFO - Streamlit app started
+2025-03-24 14:03:50,990 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-24 14:03:52,770 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:03:54,073 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:03:54,878 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-24 14:03:56,271 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:03:56,271 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:03:56,273 - INFO - Executing query: 
+     SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
+     FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+     GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:03:57,256 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:03:59,365 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:03:59,375 - INFO - Executing query: 
+    SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue 
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+    GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:04:00,056 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:04:00,641 - INFO - Executing query: 
+    SELECT payment_type, COUNT(payment_type) AS count 
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+    GROUP BY payment_type ORDER BY count DESC
+
+2025-03-24 14:04:01,455 - INFO - Executing query: 
+    SELECT product_category_name, COUNT(product_id) AS product_count
+    FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+    GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+
+2025-03-24 14:04:02,505 - INFO - Executing query: 
+SELECT 
+    p.product_id,
+    p.product_category_name,
+    COUNT(r.review_id) AS review_count
+FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+GROUP BY p.product_id, p.product_category_name
+ORDER BY review_count DESC
+LIMIT 10
+
+2025-03-24 14:05:05,386 - INFO - Streamlit app started
+2025-03-24 14:05:05,410 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:05:05,410 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:05:05,411 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:05:06,991 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:05:06,992 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:05:07,198 - INFO - Executing query: 
+        SELECT column_name 
+        FROM `valued-ceiling-454014-a9.sam1.INFORMATION_SCHEMA.COLUMNS` 
+        WHERE table_name='olist_products_dataset'
+    
+2025-03-24 14:05:08,696 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_id` ASC
+            LIMIT 10
+        
+2025-03-24 14:05:14,253 - INFO - Streamlit app started
+2025-03-24 14:05:14,285 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:05:14,285 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:05:14,286 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:05:16,024 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:05:16,025 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:05:16,256 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_photos_qty` ASC
+            LIMIT 10
+        
+2025-03-24 14:15:23,367 - INFO - Streamlit app started
+2025-03-24 14:15:23,392 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:15:23,405 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:15:23,405 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:15:25,096 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:15:25,097 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:15:25,318 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_photos_qty` DESC
+            LIMIT 10
+        
+2025-03-24 14:16:28,945 - INFO - Streamlit app started
+2025-03-24 14:16:28,961 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:16:28,961 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:16:28,962 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:16:30,647 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:16:30,649 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:16:30,852 - INFO - Executing query: 
+        SELECT column_name 
+        FROM `valued-ceiling-454014-a9.sam1.INFORMATION_SCHEMA.COLUMNS` 
+        WHERE table_name='olist_order_items_dataset'
+    
+2025-03-24 14:16:32,646 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_order_items_dataset`
+            ORDER BY `order_id` DESC
+            LIMIT 10
+        
+2025-03-24 14:21:24,696 - INFO - Streamlit app started
+2025-03-24 14:21:24,725 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:21:24,725 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:21:24,725 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:21:26,344 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:21:26,345 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:21:26,566 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_id` DESC
+            LIMIT 10
+        
+2025-03-24 14:30:44,388 - INFO - Streamlit app started
+2025-03-24 14:30:44,389 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-24 14:30:45,589 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:30:46,351 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:30:47,102 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-24 14:30:47,751 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:30:47,751 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:30:47,752 - INFO - Executing query: 
+     SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
+     FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+     GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:30:48,336 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:30:50,198 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:30:50,205 - INFO - Executing query: 
+    SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue 
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+    GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:30:50,865 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:30:51,098 - INFO - Executing query: 
+    SELECT payment_type, COUNT(payment_type) AS count 
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+    GROUP BY payment_type ORDER BY count DESC
+
+2025-03-24 14:30:51,897 - INFO - Executing query: 
+    SELECT product_category_name, COUNT(product_id) AS product_count
+    FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+    GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+
+2025-03-24 14:30:52,664 - INFO - Executing query: 
+SELECT 
+    p.product_id,
+    p.product_category_name,
+    COUNT(r.review_id) AS review_count
+FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+GROUP BY p.product_id, p.product_category_name
+ORDER BY review_count DESC
+LIMIT 10
+
+2025-03-24 14:33:05,011 - INFO - Streamlit app started
+2025-03-24 14:33:05,034 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:33:05,036 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:33:05,037 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:33:05,037 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:33:07,981 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:33:07,982 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:33:58,807 - INFO - Streamlit app started
+2025-03-24 14:33:58,834 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:33:58,834 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:33:58,835 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:33:58,836 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:33:58,892 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:33:58,893 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:40:27,334 - INFO - Streamlit app started
+2025-03-24 14:40:27,335 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-24 14:40:28,669 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:40:29,585 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:40:30,704 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-24 14:40:31,481 - INFO - Executing query: 
+     SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
+     FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+     GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:40:32,665 - INFO - Executing query: 
+    SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue 
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+    GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:40:33,584 - INFO - Executing query: 
+    SELECT payment_type, COUNT(payment_type) AS count 
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+    GROUP BY payment_type ORDER BY count DESC
+
+2025-03-24 14:40:34,366 - INFO - Executing query: 
+    SELECT product_category_name, COUNT(product_id) AS product_count
+    FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+    GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+
+2025-03-24 14:42:13,071 - INFO - Streamlit app started
+2025-03-24 14:42:13,084 - INFO - Executing query: 
+    SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:42:23,943 - INFO - Streamlit app started
+2025-03-24 14:42:27,514 - INFO - Streamlit app started
+2025-03-24 14:42:27,543 - INFO - Executing query: 
+        SELECT order_purchase_timestamp, customer_city, product_category_name, payment_type, order_status, payment_value 
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        JOIN `valued-ceiling-454014-a9.sam1.olist_customers_dataset` USING(customer_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` USING(order_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` USING(product_id) 
+        WHERE 1=1
+     AND payment_type = 'credit_card' ORDER BY order_purchase_timestamp
+2025-03-24 14:45:02,877 - INFO - Streamlit app started
+2025-03-24 14:45:02,879 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-24 14:45:04,205 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:45:04,809 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 14:45:05,458 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-24 14:45:05,989 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:45:05,989 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:45:05,991 - INFO - Executing query: 
+     SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
+     FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+     GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:45:06,504 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:45:06,505 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:45:06,870 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:45:06,871 - INFO - Executing query: 
+    SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue 
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+    GROUP BY order_date ORDER BY order_date
+
+2025-03-24 14:45:07,468 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:45:07,525 - INFO - Executing query: 
+    SELECT payment_type, COUNT(payment_type) AS count 
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+    GROUP BY payment_type ORDER BY count DESC
+
+2025-03-24 14:45:08,151 - INFO - Executing query: 
+    SELECT product_category_name, COUNT(product_id) AS product_count
+    FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+    GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+
+2025-03-24 14:45:09,114 - INFO - Executing query: 
+SELECT 
+    p.product_id,
+    p.product_category_name,
+    COUNT(r.review_id) AS review_count
+FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+GROUP BY p.product_id, p.product_category_name
+ORDER BY review_count DESC
+LIMIT 10
+
+2025-03-24 14:45:22,540 - INFO - Streamlit app started
+2025-03-24 14:45:22,580 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:45:22,580 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:45:22,581 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:45:22,582 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:45:22,636 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:45:22,636 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:45:46,272 - INFO - Streamlit app started
+2025-03-24 14:45:46,297 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:45:46,298 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:45:46,298 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:45:46,299 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:45:46,352 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:45:46,353 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:45:46,479 - INFO - Executing query: 
+        SELECT order_purchase_timestamp, customer_city, product_category_name, payment_type, order_status, payment_value 
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        JOIN `valued-ceiling-454014-a9.sam1.olist_customers_dataset` USING(customer_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` USING(order_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` USING(product_id) 
+        WHERE 1=1
+     AND payment_type = 'credit_card' ORDER BY order_purchase_timestamp
+2025-03-24 14:46:00,546 - INFO - Streamlit app started
+2025-03-24 14:46:00,581 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:46:00,581 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:46:00,582 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:46:00,583 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:46:00,667 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:46:00,668 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:46:08,744 - INFO - Streamlit app started
+2025-03-24 14:46:08,767 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:46:08,768 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:46:08,768 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:46:08,769 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:46:08,822 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:46:08,824 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:46:08,953 - INFO - Executing query: 
+        SELECT order_purchase_timestamp, customer_city, product_category_name, payment_type, order_status, payment_value 
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        JOIN `valued-ceiling-454014-a9.sam1.olist_customers_dataset` USING(customer_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` USING(order_id)
+        JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` USING(product_id) 
+        WHERE 1=1
+     AND payment_type = 'credit_card' AND order_status = 'shipped' ORDER BY order_purchase_timestamp
+2025-03-24 14:47:20,983 - INFO - Streamlit app started
+2025-03-24 14:47:21,009 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:47:21,010 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:47:21,010 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:47:21,011 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:47:21,064 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:47:21,065 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:47:27,630 - INFO - Streamlit app started
+2025-03-24 14:47:27,727 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:47:27,727 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:47:27,728 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:47:27,730 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:47:27,783 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:47:27,784 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:47:29,598 - INFO - Streamlit app started
+2025-03-24 14:47:29,628 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:47:29,628 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:47:29,629 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:47:29,629 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:47:29,683 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:47:29,684 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:19,845 - INFO - Streamlit app started
+2025-03-24 14:50:19,869 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:50:19,869 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:19,870 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:19,872 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:19,929 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:50:19,930 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:27,700 - INFO - Streamlit app started
+2025-03-24 14:50:27,737 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:50:27,737 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:27,738 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:27,739 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:27,799 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:50:27,800 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:29,637 - INFO - Streamlit app started
+2025-03-24 14:50:29,660 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:50:29,660 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:29,661 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:29,662 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:29,713 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:50:29,715 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:36,545 - INFO - Streamlit app started
+2025-03-24 14:50:36,583 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 14:50:36,583 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:36,584 - INFO - Fetching Orders Over Time Data
+2025-03-24 14:50:36,584 - INFO - Fetched Orders Over Time Data
+2025-03-24 14:50:36,670 - INFO - Fetching Revenue Over Time Data
+2025-03-24 14:50:36,671 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:02:23,795 - INFO - Streamlit app started
+2025-03-24 15:02:23,817 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:02:23,818 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:02:23,819 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:02:23,820 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:02:23,887 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:02:23,888 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:02:24,063 - INFO - Executing query: 
+        SELECT column_name 
+        FROM `valued-ceiling-454014-a9.sam1.INFORMATION_SCHEMA.COLUMNS` 
+        WHERE table_name='olist_products_dataset'
+    
+2025-03-24 15:02:25,483 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_id` ASC
+            LIMIT 10
+        
+2025-03-24 15:11:32,186 - INFO - Executing query: 
+        SELECT customer_state, COUNT(*) as customer_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_customer`
+        GROUP BY customer_state
+    
+2025-03-24 15:11:33,453 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_customer was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_customer was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 40ed7464-e376-4a88-9dd8-0440035e4164
+
+2025-03-24 15:13:29,584 - INFO - Executing query: 
+        SELECT customer_state, COUNT(*) as customer_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_customer_dataset`
+        GROUP BY customer_state
+    
+2025-03-24 15:13:30,737 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_customer_dataset was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_customer_dataset was not found in location asia-south1
+
+Location: asia-south1
+Job ID: d3226027-941e-41b8-ae4d-7219797a3668
+
+2025-03-24 15:14:14,810 - INFO - Streamlit app started
+2025-03-24 15:14:14,812 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-24 15:14:15,989 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 15:14:16,770 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-24 15:14:17,911 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-24 15:14:18,530 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:14:18,530 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:14:18,532 - INFO - Executing query: 
+     SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
+     FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+     GROUP BY order_date ORDER BY order_date
+
+2025-03-24 15:14:19,187 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:14:19,189 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:14:19,566 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:14:19,568 - INFO - Executing query: 
+    SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue 
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+    GROUP BY order_date ORDER BY order_date
+
+2025-03-24 15:14:20,157 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:14:20,207 - INFO - Executing query: 
+    SELECT payment_type, COUNT(payment_type) AS count 
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+    GROUP BY payment_type ORDER BY count DESC
+
+2025-03-24 15:14:20,767 - INFO - Executing query: 
+    SELECT product_category_name, COUNT(product_id) AS product_count
+    FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+    GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+
+2025-03-24 15:14:21,592 - INFO - Executing query: 
+SELECT 
+    p.product_id,
+    p.product_category_name,
+    COUNT(r.review_id) AS review_count
+FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+GROUP BY p.product_id, p.product_category_name
+ORDER BY review_count DESC
+LIMIT 10
+
+2025-03-24 15:14:56,107 - INFO - Streamlit app started
+2025-03-24 15:14:56,132 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:14:56,132 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:14:56,133 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:14:56,133 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:14:56,188 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:14:56,189 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:14:56,353 - INFO - Executing query: 
+        SELECT column_name 
+        FROM `valued-ceiling-454014-a9.sam1.INFORMATION_SCHEMA.COLUMNS` 
+        WHERE table_name='olist_products_dataset'
+    
+2025-03-24 15:14:57,594 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_id` ASC
+            LIMIT 10
+        
+2025-03-24 15:15:47,546 - INFO - Streamlit app started
+2025-03-24 15:15:47,570 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:15:47,571 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:15:47,571 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:15:47,572 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:15:47,627 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:15:47,628 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:15:52,120 - INFO - Streamlit app started
+2025-03-24 15:15:52,148 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:15:52,148 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:15:52,149 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:15:52,150 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:15:52,242 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:15:52,243 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:15:52,413 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+            ORDER BY `product_id` DESC
+            LIMIT 10
+        
+2025-03-24 15:17:26,288 - INFO - Streamlit app started
+2025-03-24 15:17:26,314 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:17:26,314 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:17:26,315 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:17:26,315 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:17:26,389 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:17:26,390 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:17:32,475 - INFO - Streamlit app started
+2025-03-24 15:17:32,497 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:17:32,498 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:17:32,499 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:17:32,499 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:17:32,560 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:17:32,561 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:17:44,080 - INFO - Streamlit app started
+2025-03-24 15:17:44,102 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:17:44,102 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:17:44,103 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:17:44,104 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:17:44,158 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:17:44,159 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:28:19,590 - INFO - Streamlit app started
+2025-03-24 15:28:19,613 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:28:19,614 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:28:19,615 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:28:19,616 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:28:19,686 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:28:19,686 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:33:36,933 - INFO - Streamlit app started
+2025-03-24 15:33:36,960 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:33:36,960 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:33:36,961 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:33:36,962 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:33:37,004 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:33:37,005 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:33:37,121 - INFO - Executing query: 
+SELECT 
+    order_id,
+    TIMESTAMP_DIFF(delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+FROM `valued-ceiling-454014-a9.sam1.olist_orders`
+WHERE delivered_customer_date IS NOT NULL
+
+2025-03-24 15:33:37,997 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_orders was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_orders was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 84753b6f-aedc-427f-8f44-5498e9b1fb43
+
+2025-03-24 15:35:30,522 - INFO - Streamlit app started
+2025-03-24 15:35:30,544 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:35:30,544 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:35:30,545 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:35:30,545 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:35:30,621 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:35:30,622 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:38:21,998 - INFO - Streamlit app started
+2025-03-24 15:38:22,028 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:38:22,029 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:38:22,030 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:38:22,031 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:38:22,106 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:38:22,108 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:38:39,224 - INFO - Streamlit app started
+2025-03-24 15:38:39,250 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:38:39,250 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:38:39,251 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:38:39,251 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:38:39,290 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:38:39,291 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:39:13,621 - INFO - Streamlit app started
+2025-03-24 15:39:13,652 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:39:13,652 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:39:13,653 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:39:13,654 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:39:13,718 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:39:13,719 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:46:37,776 - INFO - Streamlit app started
+2025-03-24 15:46:37,800 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:46:37,801 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:46:37,801 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:46:37,802 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:46:37,853 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:46:37,853 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:46:38,052 - INFO - Executing query: 
+    SELECT order_id,TIMESTAMP_DIFF(delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+    FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+    WHERE delivered_customer_date IS NOT NULL
+
+2025-03-24 15:46:39,204 - ERROR - Query execution failed: 400 Unrecognized name: delivered_customer_date; Did you mean order_delivered_customer_date? at [4:11]; reason: invalidQuery, location: query, message: Unrecognized name: delivered_customer_date; Did you mean order_delivered_customer_date? at [4:11]
+
+Location: asia-south1
+Job ID: 63a3b921-6f41-414f-8fad-b9ac16470e56
+
+2025-03-24 15:47:52,107 - INFO - Streamlit app started
+2025-03-24 15:47:52,129 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:47:52,129 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:47:52,130 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:47:52,131 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:47:52,195 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:47:52,196 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:47:52,352 - INFO - Executing query: 
+    SELECT 
+    order_id,
+    TIMESTAMP_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+FROM `valued-ceiling-454014-a9.sam1.olist_orders`
+WHERE order_delivered_customer_date IS NOT NULL
+
+2025-03-24 15:47:53,423 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_orders was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_orders was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 8fb99538-6678-40a6-8799-4ca253424be5
+
+2025-03-24 15:49:13,526 - INFO - Streamlit app started
+2025-03-24 15:49:13,556 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:49:13,556 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:49:13,557 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:49:13,558 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:49:13,618 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:49:13,618 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:49:13,783 - INFO - Executing query: 
+    SELECT 
+    order_id,
+    TIMESTAMP_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+FROM `valued-ceiling-454014-a9.sam1.olist_orders`
+WHERE order_delivered_customer_date IS NOT NULL AND order_purchase_timestamp IS NOT NULL
+
+2025-03-24 15:49:14,383 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_orders was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_orders was not found in location asia-south1
+
+Location: asia-south1
+Job ID: c7e531c0-1300-4d78-8dfa-a45c41dcadcd
+
+2025-03-24 15:49:39,950 - INFO - Streamlit app started
+2025-03-24 15:49:39,986 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:49:39,986 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:49:39,987 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:49:39,988 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:49:40,055 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:49:40,056 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:49:40,303 - INFO - Executing query: 
+    SELECT 
+    order_id,
+    TIMESTAMP_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+WHERE order_delivered_customer_date IS NOT NULL AND order_purchase_timestamp IS NOT NULL
+
+2025-03-24 15:50:40,596 - INFO - Streamlit app started
+2025-03-24 15:50:40,627 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:50:40,627 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:50:40,627 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:50:40,628 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:50:40,684 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:50:40,685 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:52:06,372 - INFO - Streamlit app started
+2025-03-24 15:52:06,397 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:52:06,397 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:52:06,398 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:52:06,399 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:52:06,473 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:52:06,473 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:52:31,824 - INFO - Streamlit app started
+2025-03-24 15:52:31,851 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:52:31,851 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:52:31,852 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:52:31,852 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:52:31,928 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:52:31,929 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:52:57,749 - INFO - Streamlit app started
+2025-03-24 15:52:57,775 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:52:57,776 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:52:57,776 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:52:57,777 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:52:57,822 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:52:57,822 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:55:24,997 - INFO - Streamlit app started
+2025-03-24 15:55:25,027 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:55:25,028 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:55:25,028 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:55:25,029 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:55:25,114 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:55:25,116 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:55:25,396 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    g.geolocation_city AS city,
+    COUNT(o.order_id) AS order_count
+FROM `valued-ceiling-454014-a9.sam1.olist_orders` o
+JOIN `valued-ceiling-454014-a9.sam1.olist_customer` c
+    ON o.customer_id = c.customer_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation` g
+    ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+GROUP BY city, latitude, longitude
+HAVING COUNT(o.order_id) > 5  -- Only show cities with >5 orders
+ORDER BY order_count DESC
+
+2025-03-24 15:55:26,228 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_customer was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_customer was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 68c37123-03f6-495b-a827-7e038d32403a
+
+2025-03-24 15:56:35,429 - INFO - Streamlit app started
+2025-03-24 15:56:35,455 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:56:35,455 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:56:35,456 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:56:35,456 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:56:35,504 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:56:35,505 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:56:35,739 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    g.geolocation_city AS city,
+    COUNT(o.order_id) AS order_count
+FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset` o
+JOIN `valued-ceiling-454014-a9.sam1.olist_customer_dataset` c
+    ON o.customer_id = c.customer_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset` g
+    ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+GROUP BY city, latitude, longitude
+HAVING COUNT(o.order_id) > 5  -- Only show cities with >5 orders
+ORDER BY order_count DESC
+
+2025-03-24 15:56:36,382 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_customer_dataset was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_customer_dataset was not found in location asia-south1
+
+Location: asia-south1
+Job ID: c7e4a8aa-d5cb-4435-b289-eb7126961917
+
+2025-03-24 15:56:56,498 - INFO - Streamlit app started
+2025-03-24 15:56:56,515 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:56:56,515 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:56:56,516 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:56:56,516 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:56:56,570 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:56:56,571 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:59:30,144 - INFO - Streamlit app started
+2025-03-24 15:59:30,170 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 15:59:30,170 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:59:30,171 - INFO - Fetching Orders Over Time Data
+2025-03-24 15:59:30,172 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:59:30,228 - INFO - Fetching Revenue Over Time Data
+2025-03-24 15:59:30,229 - INFO - Fetched Orders Over Time Data
+2025-03-24 15:59:30,509 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    g.geolocation_city AS city,
+    COUNT(o.order_id) AS order_count
+FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset` g
+GROUP BY city, latitude, longitude
+
+
+2025-03-24 15:59:31,342 - ERROR - Query execution failed: 400 Unrecognized name: o at [6:11]; reason: invalidQuery, location: query, message: Unrecognized name: o at [6:11]
+
+Location: asia-south1
+Job ID: e1a8252c-56c9-4d7e-809f-9f7f72762d09
+
+2025-03-24 16:00:02,374 - INFO - Streamlit app started
+2025-03-24 16:00:02,404 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:00:02,404 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:02,405 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:02,406 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:02,471 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:00:02,472 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:06,982 - INFO - Streamlit app started
+2025-03-24 16:00:07,006 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:00:07,006 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:07,007 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:07,007 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:07,061 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:00:07,062 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:07,312 - INFO - Executing query: 
+        SELECT column_name 
+        FROM `valued-ceiling-454014-a9.sam1.INFORMATION_SCHEMA.COLUMNS` 
+        WHERE table_name='olist_geolocation_dataset'
+    
+2025-03-24 16:00:08,779 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+            ORDER BY `geolocation_zip_code_prefix` DESC
+            LIMIT 10
+        
+2025-03-24 16:00:40,161 - INFO - Streamlit app started
+2025-03-24 16:00:40,195 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:00:40,195 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:40,197 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:40,197 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:40,276 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:00:40,277 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:44,627 - INFO - Streamlit app started
+2025-03-24 16:00:44,652 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:00:44,652 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:44,653 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:00:44,653 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:44,723 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:00:44,724 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:00:45,000 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+            ORDER BY `geolocation_zip_code_prefix` DESC
+        
+        
+2025-03-24 16:02:35,654 - INFO - Streamlit app started
+2025-03-24 16:02:35,677 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:02:35,679 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:02:35,680 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:02:35,681 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:02:35,739 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:02:35,740 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:02:36,022 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+            ORDER BY `geolocation_zip_code_prefix` ASC
+        
+        
+2025-03-24 16:03:25,927 - INFO - Streamlit app started
+2025-03-24 16:03:25,957 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:03:25,958 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:03:25,959 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:03:25,960 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:03:26,042 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:03:26,043 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:03:36,213 - INFO - Streamlit app started
+2025-03-24 16:03:36,248 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:03:36,248 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:03:36,249 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:03:36,250 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:03:36,309 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:03:36,310 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:03:36,597 - INFO - Executing query: 
+            SELECT * FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+            ORDER BY `geolocation_zip_code_prefix` DESC
+            LIMIT 100
+        
+2025-03-24 16:05:39,303 - INFO - Streamlit app started
+2025-03-24 16:05:39,332 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:05:39,332 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:05:39,333 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:05:39,333 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:05:39,380 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:05:39,381 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:05:39,635 - INFO - Executing query: 
+
+    SELECT 
+    geolocation_lat AS latitude,
+    geolocation_lng AS longitude,
+    geolocation_city AS city,
+    COUNT(DISTINCT geolocation_zip_code_prefix) AS zip_count
+FROM `valued-ceiling-454014-a9.sam1.olist_geolocation`
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT geolocation_zip_code_prefix) > 5  -- Only show cities with >5 zip codes
+ORDER BY zip_count DESC
+
+
+2025-03-24 16:05:40,542 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_geolocation was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_geolocation was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 66394d63-9362-49f5-aeb8-264402d8a433
+
+2025-03-24 16:06:01,231 - INFO - Streamlit app started
+2025-03-24 16:06:01,260 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:06:01,260 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:06:01,261 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:06:01,261 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:06:01,310 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:06:01,311 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:06:01,518 - INFO - Executing query: 
+
+    SELECT 
+    geolocation_lat AS latitude,
+    geolocation_lng AS longitude,
+    geolocation_city AS city,
+    COUNT(DISTINCT geolocation_zip_code_prefix) AS zip_count
+FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT geolocation_zip_code_prefix) > 5  -- Only show cities with >5 zip codes
+ORDER BY zip_count DESC
+
+
+2025-03-24 16:07:08,695 - INFO - Streamlit app started
+2025-03-24 16:07:08,717 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:07:08,717 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:07:08,718 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:07:08,719 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:07:08,777 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:07:08,778 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:07:09,024 - INFO - Executing query: 
+SELECT 
+    geolocation_lat AS latitude,
+    geolocation_lng AS longitude,
+    geolocation_city AS city,
+    COUNT(DISTINCT geolocation_zip_code_prefix) AS zip_count
+FROM `valued-ceiling-454014-a9.sam1.olist_geolocation`
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT geolocation_zip_code_prefix) > 5  -- Show cities with >5 zip codes
+ORDER BY zip_count DESC
+
+2025-03-24 16:07:09,794 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_geolocation was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_geolocation was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 60c54ffb-d0b3-43f4-8e51-98c713a7c1ae
+
+2025-03-24 16:07:36,312 - INFO - Streamlit app started
+2025-03-24 16:07:36,335 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:07:36,335 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:07:36,336 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:07:36,337 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:07:36,397 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:07:36,398 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:07:36,623 - INFO - Executing query: 
+SELECT 
+    geolocation_lat AS latitude,
+    geolocation_lng AS longitude,
+    geolocation_city AS city,
+    COUNT(DISTINCT geolocation_zip_code_prefix) AS zip_count
+FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT geolocation_zip_code_prefix) > 5  -- Show cities with >5 zip codes
+ORDER BY zip_count DESC
+
+2025-03-24 16:38:02,182 - INFO - Streamlit app started
+2025-03-24 16:38:02,212 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:38:02,212 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:38:02,213 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:38:02,214 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:38:02,276 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:38:02,277 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:38:02,606 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    c.customer_city AS city,
+    COUNT(DISTINCT c.customer_id) AS customer_count
+FROM `valued-ceiling-454014-a9.sam1.olist_customers` c
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation` g 
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT c.customer_id) > 5  -- Show cities with >5 customers
+ORDER BY customer_count DESC
+
+2025-03-24 16:38:03,222 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_customers was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_customers was not found in location asia-south1
+
+Location: asia-south1
+Job ID: c8744019-f305-45ec-9b95-5dd75e183386
+
+2025-03-24 16:39:36,642 - INFO - Streamlit app started
+2025-03-24 16:39:36,664 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:39:36,665 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:39:36,665 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:39:36,666 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:39:36,724 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:39:36,725 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:39:37,033 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    c.customer_city AS city,
+    COUNT(DISTINCT c.customer_id) AS customer_count
+FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset` c
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset` g 
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT c.customer_id) > 5  -- Show cities with >5 customers
+ORDER BY customer_count DESC
+
+2025-03-24 16:44:33,195 - INFO - Streamlit app started
+2025-03-24 16:44:33,221 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:44:33,222 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:44:33,223 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:44:33,224 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:44:33,280 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:44:33,281 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:44:33,677 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    c.customer_city AS city,
+    COUNT(DISTINCT c.customer_id) AS customer_count,
+    COUNT(o.order_id) AS order_count
+FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset` c
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset` g 
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+LEFT JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` o 
+ON c.customer_id = o.customer_id
+GROUP BY city, latitude, longitude
+HAVING COUNT(DISTINCT c.customer_id) > 5  -- Show cities with >5 customers
+ORDER BY order_count DESC
+
+2025-03-24 16:49:30,473 - INFO - Streamlit app started
+2025-03-24 16:49:30,501 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:49:30,501 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:49:30,502 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:49:30,503 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:49:30,561 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:49:30,563 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:49:30,856 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    c.customer_city AS city,
+    COUNT(o.order_id) AS order_count
+FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset` c
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset` g 
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+LEFT JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` o 
+ON c.customer_id = o.customer_id
+GROUP BY city, latitude, longitude
+HAVING COUNT(o.order_id) > 5  -- Show cities with >5 orders
+ORDER BY order_count DESC
+
+2025-03-24 16:51:25,179 - INFO - Streamlit app started
+2025-03-24 16:51:25,208 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:51:25,208 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:51:25,209 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:51:25,210 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:51:25,264 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:51:25,265 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:53:28,405 - INFO - Streamlit app started
+2025-03-24 16:53:28,433 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:53:28,433 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:53:28,434 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:53:28,434 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:53:28,490 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:53:28,491 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:54:18,805 - INFO - Streamlit app started
+2025-03-24 16:54:18,839 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:54:18,839 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:54:18,840 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:54:18,841 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:54:18,963 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:54:18,965 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:56:02,801 - INFO - Streamlit app started
+2025-03-24 16:56:02,823 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:56:02,824 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:56:02,824 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:56:02,825 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:56:02,879 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:56:02,879 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:56:22,194 - INFO - Streamlit app started
+2025-03-24 16:56:22,229 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:56:22,231 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:56:22,232 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:56:22,233 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:56:22,323 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:56:22,324 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:59:01,776 - INFO - Streamlit app started
+2025-03-24 16:59:01,800 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 16:59:01,800 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:59:01,801 - INFO - Fetching Orders Over Time Data
+2025-03-24 16:59:01,802 - INFO - Fetched Orders Over Time Data
+2025-03-24 16:59:01,856 - INFO - Fetching Revenue Over Time Data
+2025-03-24 16:59:01,857 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:00:34,140 - INFO - Streamlit app started
+2025-03-24 17:00:34,174 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:00:34,175 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:00:34,176 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:00:34,177 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:00:34,251 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:00:34,253 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:02:04,175 - INFO - Streamlit app started
+2025-03-24 17:02:04,200 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:02:04,201 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:02:04,201 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:02:04,203 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:02:04,255 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:02:04,256 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:02:53,080 - INFO - Streamlit app started
+2025-03-24 17:02:53,108 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:02:53,109 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:02:53,109 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:02:53,110 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:02:53,168 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:02:53,169 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:03:43,828 - INFO - Streamlit app started
+2025-03-24 17:03:43,852 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:03:43,852 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:03:43,854 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:03:43,854 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:03:43,906 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:03:43,907 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:04:18,203 - INFO - Streamlit app started
+2025-03-24 17:04:18,239 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:04:18,239 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:04:18,241 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:04:18,242 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:04:18,326 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:04:18,327 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:09:10,306 - INFO - Streamlit app started
+2025-03-24 17:09:10,328 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:09:10,328 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:09:10,329 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:09:10,330 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:09:10,383 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:09:10,384 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:09:18,659 - INFO - Executing query: 
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    c.customer_city AS city,
+    COUNT(o.order_id) AS order_count,
+    'Customer' AS type
+FROM `valued-ceiling-454014-a9.sam1.olist_customers` c
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation` g 
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+LEFT JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` o 
+ON c.customer_id = o.customer_id
+GROUP BY city, latitude, longitude
+
+UNION ALL
+
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    s.seller_city AS city,
+    COUNT(s.seller_id) AS seller_count,
+    'Seller' AS type
+FROM `valued-ceiling-454014-a9.sam1.olist_sellers` s
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation` g 
+ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
+GROUP BY city, latitude, longitude
+
+2025-03-24 17:09:19,596 - ERROR - Query execution failed: 404 Not found: Table valued-ceiling-454014-a9:sam1.olist_customers was not found in location asia-south1; reason: notFound, message: Not found: Table valued-ceiling-454014-a9:sam1.olist_customers was not found in location asia-south1
+
+Location: asia-south1
+Job ID: 9505a6cf-d95e-4526-af8d-3b9dcaddcbbb
+
+2025-03-24 17:13:53,158 - INFO - Streamlit app started
+2025-03-24 17:13:53,188 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:13:53,188 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:13:53,189 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:13:53,190 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:13:53,243 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:13:53,243 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:14:00,857 - INFO - Executing query: 
+SSELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    c.customer_city AS city,
+    COUNT(o.order_id) AS order_count,
+    'Customer' AS type
+FROM `valued-ceiling-454014-a9.sam1.olist_customers` c
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation` g 
+ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+LEFT JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` o 
+ON c.customer_id = o.customer_id
+GROUP BY city, latitude, longitude
+
+UNION ALL
+
+SELECT 
+    g.geolocation_lat AS latitude,
+    g.geolocation_lng AS longitude,
+    s.seller_city AS city,
+    COUNT(oi.order_id) AS order_count,
+    'Seller' AS type
+FROM `valued-ceiling-454014-a9.sam1.olist_sellers` s
+JOIN `valued-ceiling-454014-a9.sam1.olist_geolocation` g 
+ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
+JOIN `valued-ceiling-454014-a9.sam1.olist_order_items` oi 
+ON s.seller_id = oi.seller_id
+JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` o 
+ON oi.order_id = o.order_id
+GROUP BY city, latitude, longitude
+
+2025-03-24 17:14:01,731 - ERROR - Query execution failed: 400 Syntax error: Unexpected identifier "SSELECT" at [2:1]; reason: invalidQuery, location: query, message: Syntax error: Unexpected identifier "SSELECT" at [2:1]
+
+Location: asia-south1
+Job ID: 4dfa76d1-7b69-40ea-aaaf-cbefca2f8a55
+
+2025-03-24 17:14:51,353 - INFO - Streamlit app started
+2025-03-24 17:14:51,388 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:14:51,390 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:14:51,391 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:14:51,391 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:14:51,446 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:14:51,447 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:15:58,781 - INFO - Streamlit app started
+2025-03-24 17:15:58,806 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:15:58,806 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:15:58,808 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:15:58,808 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:15:58,861 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:15:58,863 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:20:25,065 - INFO - Streamlit app started
+2025-03-24 17:20:25,089 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:20:25,090 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:20:25,090 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:20:25,092 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:20:25,144 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:20:25,145 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:20:33,293 - INFO - Executing query: 
+SELECT 
+    order_status,
+    COUNT(order_id) AS order_count
+FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+GROUP BY order_status
+ORDER BY order_count DESC
+
+2025-03-24 17:25:07,087 - INFO - Streamlit app started
+2025-03-24 17:25:07,114 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:25:07,116 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:25:07,116 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:25:07,117 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:25:07,173 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:25:07,174 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:27:29,134 - INFO - Streamlit app started
+2025-03-24 17:27:29,158 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 17:27:29,158 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:27:29,159 - INFO - Fetching Orders Over Time Data
+2025-03-24 17:27:29,161 - INFO - Fetched Orders Over Time Data
+2025-03-24 17:27:29,248 - INFO - Fetching Revenue Over Time Data
+2025-03-24 17:27:29,249 - INFO - Fetched Orders Over Time Data

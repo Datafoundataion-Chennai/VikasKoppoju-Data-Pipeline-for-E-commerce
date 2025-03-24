@@ -164,18 +164,48 @@ fig = px.bar(
         color_continuous_scale="blues"
     )
 st.plotly_chart(fig)
-
+st.subheader("Have a glance on the Data")
 option = st.selectbox(
     "Which table data you want",
-    ("olist_orders_dataset", "olist_products_dataset", "olist_order_items_dataset"),
+    ("olist_orders_dataset", "olist_products_dataset", "olist_order_items_dataset","olist_order_payments_dataset","olist_customers_dataset"),
     index=None,
     placeholder="Select contact method...",
 )
-query = fetch_data(f"""
-SELECT * FROM `{PROJECT_ID}.{DATASET_ID}.{option}`
-LIMIT 10
-""")
+if option:
+    column_query = f"SELECT column_name FROM `{PROJECT_ID}.{DATASET_ID}.INFORMATION_SCHEMA.COLUMNS` WHERE table_name='{option}'"
+    columns_df = fetch_data(column_query)
 
-st.write(query)
+    if not columns_df.empty:
+        columns = columns_df["column_name"].tolist()
 
-st.image("./data/image/ER.jpeg", caption="Sunrise by the mountains")
+        sort_column = st.selectbox(
+            "Select column to sort by",
+            columns,
+            placeholder="Select column..."
+        )
+
+        sort_order = st.radio("Sort order", ("Ascending", "Descending"), index=0)
+
+        
+        if sort_column:
+            query = f"""
+            SELECT * FROM `{PROJECT_ID}.{DATASET_ID}.{option}`
+            ORDER BY `{sort_column}` {'ASC' if sort_order == 'Ascending' else 'DESC'}
+            LIMIT 10
+            """
+        else:
+            
+            query = f"""
+            SELECT * FROM `{PROJECT_ID}.{DATASET_ID}.{option}`
+            LIMIT 10
+            """
+
+        data = fetch_data(query)
+        st.write(data)
+    else:
+        st.warning("No columns found for the selected table.")
+
+
+# st.write(query)
+st.subheader("ER Diagram of Dataset")
+st.image("./data/image/ER.jpeg", caption="Relations of the Dataset")

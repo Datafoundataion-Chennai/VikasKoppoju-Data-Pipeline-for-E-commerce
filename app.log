@@ -1,0 +1,10 @@
+2025-03-24 09:46:02,261 - INFO - Streamlit app started
+2025-03-24 09:46:02,287 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-24 09:46:02,287 - INFO - Fetching Orders Over Time Data
+2025-03-24 09:46:02,288 - INFO - Fetched Orders Over Time Data
+2025-03-24 09:46:02,349 - INFO - Fetching Revenue Over Time Data
+2025-03-24 09:46:02,350 - INFO - Fetched Orders Over Time Data

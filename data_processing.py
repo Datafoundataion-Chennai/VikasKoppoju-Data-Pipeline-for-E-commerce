@@ -3,21 +3,16 @@ import numpy as np
 import re
 def infer_object_type(series):
     """Infer if an object-type column is a date, time, or timestamp."""
-    # print("-----------------Infer function Started---------------")
-    # print(series)
-    # print("-----------------series ended---------------")
-
-    # First, try direct conversion using Pandas
     try:
         parsed_series = pd.to_datetime(series, errors="coerce", format="%Y-%m-%d %H:%M:%S")
         if parsed_series.notna().all():
             return "TIMESTAMP"
     except Exception:
-        pass  # If conversion fails, continue with regex-based approach
+        pass  
 
-    date_pattern = r"^\d{4}-\d{2}-\d{2}$"  # Matches "YYYY-MM-DD"
-    time_pattern = r"^\d{2}:\d{2}(:\d{2})?$"  # Matches "HH:MM" or "HH:MM:SS"
-    timestamp_pattern = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$"  # Matches "YYYY-MM-DD HH:MM:SS"
+    date_pattern = r"^\d{4}-\d{2}-\d{2}$"  
+    time_pattern = r"^\d{2}:\d{2}(:\d{2})?$"  
+    timestamp_pattern = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$"
 
     for value in series.dropna().astype(str):
         if re.match(timestamp_pattern, value):
@@ -27,20 +22,7 @@ def infer_object_type(series):
         elif re.match(time_pattern, value):
             return "TIME"
 
-    return "STRING"  # Default if no match is found
-  # Default if no match is found
-    # try:
-    #     parsed_col = pd.to_datetime(series, errors="coerce")  
-    #     if parsed_col.notna().all():
-    #         if parsed_col.dt.time.nunique() > 1 and parsed_col.dt.date.nunique() > 1:
-    #             return "TIMESTAMP"
-    #         elif parsed_col.dt.time.nunique() > 1:
-    #             return "TIME"
-    #         else:
-    #             return "DATE"
-    # except Exception:
-    #     pass
-    # return "STRING"
+    return "STRING" 
 
 def download_and_clean_data(csv_path):
     """Downloads dataset, cleans it, and returns a DataFrame with inferred schema."""

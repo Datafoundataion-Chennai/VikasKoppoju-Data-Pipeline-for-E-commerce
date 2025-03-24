@@ -1,22 +1,23 @@
-import streamlit as st
-from google.cloud import bigquery 
+# Imports
+import streamlit as st # For Visuliazation
+from google.cloud import bigquery # To handle data
 import os
-import pandas as pd 
-import plotly.express as px 
+import pandas as pd # For File Handling
+import plotly.express as px # Plotting of data
 import matplotlib.pyplot as plt
 import logging
-
+# Set up logging
 logging.basicConfig(filename="app.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-
+#  Get key from Google Bigquery to get access
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/koppo/Downloads/valued-ceiling-454014-a9-f6887630e113.json"
-
+# Connect with remote client
 client = bigquery.Client()
-
+# Project Name in Bigquery in GCP
 PROJECT_ID = "valued-ceiling-454014-a9"
-
+# Dataset ID
 DATASET_ID = "sam1"
-
+# Reuses the cache to load the contents
 @st.cache_data
 def fetch_data(query):
     try:
@@ -26,11 +27,14 @@ def fetch_data(query):
         logging.error(f"Query execution failed: {e}")
         return pd.DataFrame()
 
-
+# Steamlit code starts
 st.title(":shopping_trolley: Event-driven Data Pipeline for E-commerce")
 logging.info("Streamlit app started")
+# Queries for Statstics
 
+# total orders
 
+# Finds total orders from olist_orders table
 total_orders = fetch_data(f"SELECT COUNT(DISTINCT order_id) AS total_orders FROM `{PROJECT_ID}.{DATASET_ID}.olist_orders_dataset`")
 
 
@@ -39,7 +43,7 @@ avg_order_value = fetch_data(f"SELECT SUM(payment_value) / COUNT(DISTINCT order_
 total_customers = fetch_data(f"SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `{PROJECT_ID}.{DATASET_ID}.olist_customers_dataset`")
 
 
-
+# Create column's to represent stats
 col1, col2 = st.columns(2)
 with col1:
     st.metric(f":package: Total Orders",total_orders['total_orders'][0])
@@ -51,7 +55,7 @@ logging.info(f"Displayed Metrics - Total Orders: {total_orders}, Total Revenue: 
                  f"Total Customers: {total_customers}, Avg Order Value: {avg_order_value}")
 
 
-
+# Plotting for Orders Over the Time Uses olist orders dataset
 logging.info("Fetching Orders Over Time Data")
 orders_over_time = fetch_data(f"""
      SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
@@ -62,6 +66,7 @@ logging.info("Fetched Orders Over Time Data")
 fig_orders = px.line(orders_over_time, x="order_date", y="order_count",title="📅 Orders Over Time",labels={"order_date": "Order Date", "order_count": "Number of Orders"} )
 st.plotly_chart(fig_orders)
 
+# Plotting for Revenue Over the Time from orders and payments dataset
 logging.info("Fetching Revenue Over Time Data")
 revenue_over_time = fetch_data(f"""
     SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue 
@@ -74,6 +79,7 @@ fig_revenue = px.line(revenue_over_time, x="order_date", y="revenue", title="�
 st.plotly_chart(fig_revenue)
 
 
+# Plotting for Payment Type Distribution in pie
 payment_types = fetch_data(f"""
     SELECT payment_type, COUNT(payment_type) AS count 
     FROM `{PROJECT_ID}.{DATASET_ID}.olist_order_payments_dataset`
@@ -92,6 +98,7 @@ fig_payments.update_traces(
 st.plotly_chart(fig_payments)
 
 
+# Plotting for Top selling categories
 top_categories = fetch_data(f"""
     SELECT product_category_name, COUNT(product_id) AS product_count
     FROM `{PROJECT_ID}.{DATASET_ID}.olist_products_dataset`
@@ -105,7 +112,7 @@ fig_categories = px.bar(top_categories, x="product_category_name", y="product_co
 st.plotly_chart(fig_categories)
 
 
-
+# Fliters
 st.sidebar.header("📊 Filters")
 date_range = st.sidebar.date_input("Select Date Range", [])
 city_filter = st.sidebar.text_input("Enter City Name")
@@ -134,7 +141,7 @@ if st.sidebar.button("Apply Filters"):
     st.dataframe(filtered_data)
 
 
-
+# Reviews
 query = fetch_data(f"""
 SELECT 
     p.product_id,

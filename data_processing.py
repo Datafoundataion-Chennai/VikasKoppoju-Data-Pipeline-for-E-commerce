@@ -65,5 +65,5 @@ def download_and_clean_data(csv_path):
     # Ensure NaN values are handled correctly
     df = df.where(pd.notnull(df), None)
 
-    print(f"✅ Data cleaned and schema inferred: {schema_dict}")
+    print(f"Data cleaned and schema inferred: {schema_dict}")
     return df, schema_dict

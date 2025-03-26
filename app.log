@@ -2121,3 +2121,490 @@ Job ID: 44fe924e-aa61-4dd0-9e1d-14a2402f1b85
 2025-03-26 10:14:11,323 - INFO - Streamlit app started
 2025-03-26 10:14:12,873 - INFO - Streamlit app started
 2025-03-26 10:14:13,863 - INFO - Streamlit app started
+2025-03-26 10:18:29,525 - INFO - Streamlit app started
+2025-03-26 10:18:29,528 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-26 10:18:30,695 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-26 10:18:31,491 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-26 10:18:32,249 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-26 10:18:32,919 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 10:18:32,925 - INFO - Executing query: 
+        SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset` GROUP BY order_date ORDER BY order_date
+2025-03-26 10:18:34,449 - INFO - Executing query: 
+        SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+        GROUP BY order_date ORDER BY order_date
+    
+2025-03-26 10:18:35,438 - INFO - Executing query: 
+        SELECT payment_type, COUNT(payment_type) AS count
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+        GROUP BY payment_type ORDER BY count DESC
+    
+2025-03-26 10:18:36,081 - INFO - Executing query: 
+        SELECT product_category_name, COUNT(product_id) AS product_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+        GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+    
+2025-03-26 10:18:36,944 - INFO - Executing query: 
+        SELECT order_id, TIMESTAMP_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        WHERE order_delivered_customer_date 
+        IS NOT NULL AND order_purchase_timestamp IS NOT NULL
+    
+2025-03-26 10:18:39,673 - INFO - Executing query: 
+        SELECT p.product_id,p.product_category_name, COUNT(r.review_id) AS review_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+        JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+        GROUP BY p.product_id, p.product_category_name
+        ORDER BY review_count DESC
+        LIMIT 10
+    
+2025-03-26 10:18:40,640 - INFO - Executing query: 
+        SELECT o.order_id, p.product_category_name, SUM(op.payment_value) AS total_payment_value
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` AS op
+    JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` AS o ON op.order_id = o.order_id
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` AS oi ON o.order_id = oi.order_id
+    JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` AS p ON oi.product_id = p.product_id
+    GROUP BY o.order_id, p.product_category_name
+    ORDER BY total_payment_value DESC
+    LIMIT 10;
+    
+2025-03-26 10:19:41,172 - INFO - Streamlit app started
+2025-03-26 10:19:41,175 - INFO - Executing query: 
+        SELECT customer_id, 
+            customer_unique_id, 
+            customer_zip_code_prefix, 
+            customer_city, 
+            customer_state
+        FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+        ORDER BY customer_city;
+        
+2025-03-26 10:20:02,844 - INFO - Streamlit app started
+2025-03-26 10:21:18,417 - INFO - Streamlit app started
+2025-03-26 10:21:22,258 - INFO - Streamlit app started
+2025-03-26 10:21:25,664 - INFO - Streamlit app started
+2025-03-26 10:22:27,727 - INFO - Streamlit app started
+2025-03-26 10:22:32,061 - INFO - Streamlit app started
+2025-03-26 10:22:32,067 - INFO - Executing query: 
+        SELECT order_id, 
+            COALESCE(payment_type, 'Unknown') AS payment_type, 
+            payment_installments, 
+            payment_value
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+        ORDER BY payment_value DESC;
+        
+2025-03-26 10:23:13,333 - INFO - Streamlit app started
+2025-03-26 10:23:26,018 - INFO - Streamlit app started
+2025-03-26 10:23:26,020 - INFO - Executing query: 
+        SELECT geolocation_zip_code_prefix, 
+            geolocation_lat, 
+            geolocation_lng, 
+            geolocation_city, 
+            geolocation_state
+        FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+        ORDER BY geolocation_city;
+        
+2025-03-26 10:27:44,124 - INFO - Streamlit app started
+2025-03-26 10:27:44,126 - INFO - Executing query: 
+        SELECT order_id, 
+               order_item_id, 
+               product_id, 
+               seller_id, 
+               shipping_limit_date, 
+               price, 
+               freight_value
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_items_dataset`
+        ORDER BY order_id;
+        
+2025-03-26 10:29:26,029 - INFO - Streamlit app started
+2025-03-26 10:30:15,168 - INFO - Streamlit app started
+2025-03-26 10:31:03,347 - INFO - Streamlit app started
+2025-03-26 10:31:28,896 - INFO - Streamlit app started
+2025-03-26 10:32:58,931 - INFO - Streamlit app started
+2025-03-26 10:33:05,152 - INFO - Streamlit app started
+2025-03-26 10:33:05,157 - INFO - Executing query: 
+        SELECT review_id, order_id, review_score, review_comment_title, 
+               review_comment_message, review_creation_date, review_answer_timestamp
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset`
+        ORDER BY review_creation_date DESC;
+        
+2025-03-26 10:38:38,548 - INFO - Streamlit app started
+2025-03-26 10:38:39,750 - INFO - Streamlit app started
+2025-03-26 10:38:44,372 - INFO - Streamlit app started
+2025-03-26 10:38:46,666 - INFO - Streamlit app started
+2025-03-26 10:38:46,668 - INFO - Executing query: 
+        SELECT order_id, customer_id, order_status, order_purchase_timestamp, 
+               order_approved_at, order_delivered_carrier_date, 
+               order_delivered_customer_date, order_estimated_delivery_date
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        ORDER BY order_purchase_timestamp DESC;
+        
+2025-03-26 10:39:04,197 - INFO - Streamlit app started
+2025-03-26 10:39:04,206 - INFO - Executing query: 
+        SELECT * FROM ``valued-ceiling-454014-a9.sam1.olist_products_dataset`
+        ORDER BY product_category_name;
+        
+2025-03-26 10:39:05,256 - ERROR - Query execution failed: 400 Syntax error: Invalid empty identifier at [2:23]; reason: invalidQuery, location: query, message: Syntax error: Invalid empty identifier at [2:23]
+
+Location: US
+Job ID: 903568c6-c09d-48e8-b3e5-52102f868c51
+
+2025-03-26 10:39:16,457 - INFO - Streamlit app started
+2025-03-26 10:39:18,344 - INFO - Streamlit app started
+2025-03-26 10:39:46,326 - INFO - Streamlit app started
+2025-03-26 10:40:10,158 - INFO - Streamlit app started
+2025-03-26 10:40:10,184 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 10:51:36,271 - INFO - Streamlit app started
+2025-03-26 10:51:36,310 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 10:51:42,856 - INFO - Streamlit app started
+2025-03-26 10:51:42,881 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:08:36,211 - INFO - Streamlit app started
+2025-03-26 11:08:36,224 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:09:13,659 - INFO - Streamlit app started
+2025-03-26 11:09:13,679 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:39:07,712 - INFO - Streamlit app started
+2025-03-26 11:39:07,714 - INFO - Executing query: SELECT COUNT(DISTINCT order_id) AS total_orders FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+2025-03-26 11:39:09,036 - INFO - Executing query: SELECT SUM(payment_value) AS total_revenue FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-26 11:39:09,697 - INFO - Executing query: SELECT SUM(payment_value) / COUNT(DISTINCT order_id) AS avg_order_value FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+2025-03-26 11:39:10,408 - INFO - Executing query: SELECT COUNT(DISTINCT customer_unique_id) AS total_customers FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+2025-03-26 11:39:11,066 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:39:11,068 - INFO - Executing query: 
+        SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset` GROUP BY order_date ORDER BY order_date
+2025-03-26 11:39:11,460 - INFO - Streamlit app started
+2025-03-26 11:39:11,494 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:39:12,728 - INFO - Executing query: 
+        SELECT DATE(order_purchase_timestamp) AS order_date, SUM(payment_value) AS revenue
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` USING(order_id)
+        GROUP BY order_date ORDER BY order_date
+    
+2025-03-26 11:39:14,726 - INFO - Executing query: 
+        SELECT payment_type, COUNT(payment_type) AS count
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+        GROUP BY payment_type ORDER BY count DESC
+    
+2025-03-26 11:39:15,593 - INFO - Executing query: 
+        SELECT product_category_name, COUNT(product_id) AS product_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+        GROUP BY product_category_name ORDER BY product_count DESC LIMIT 5
+    
+2025-03-26 11:39:17,360 - INFO - Executing query: 
+        SELECT order_id, TIMESTAMP_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS delivery_days
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        WHERE order_delivered_customer_date 
+        IS NOT NULL AND order_purchase_timestamp IS NOT NULL
+    
+2025-03-26 11:39:22,110 - INFO - Executing query: 
+        SELECT p.product_id,p.product_category_name, COUNT(r.review_id) AS review_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+        JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+        GROUP BY p.product_id, p.product_category_name
+        ORDER BY review_count DESC
+        LIMIT 10
+    
+2025-03-26 11:39:23,222 - INFO - Executing query: 
+        SELECT o.order_id, p.product_category_name, SUM(op.payment_value) AS total_payment_value
+    FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset` AS op
+    JOIN `valued-ceiling-454014-a9.sam1.olist_orders_dataset` AS o ON op.order_id = o.order_id
+    JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` AS oi ON o.order_id = oi.order_id
+    JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` AS p ON oi.product_id = p.product_id
+    GROUP BY o.order_id, p.product_category_name
+    ORDER BY total_payment_value DESC
+    LIMIT 10;
+    
+2025-03-26 11:39:35,684 - INFO - Streamlit app started
+2025-03-26 11:39:35,688 - INFO - Executing query: 
+        SELECT customer_id, 
+            customer_unique_id, 
+            customer_zip_code_prefix, 
+            customer_city, 
+            customer_state
+        FROM `valued-ceiling-454014-a9.sam1.olist_customers_dataset`
+        ORDER BY customer_city;
+        
+2025-03-26 11:39:47,372 - INFO - Streamlit app started
+2025-03-26 11:39:47,375 - INFO - Executing query: 
+        SELECT geolocation_zip_code_prefix, 
+            geolocation_lat, 
+            geolocation_lng, 
+            geolocation_city, 
+            geolocation_state
+        FROM `valued-ceiling-454014-a9.sam1.olist_geolocation_dataset`
+        ORDER BY geolocation_city;
+        
+2025-03-26 11:40:37,278 - INFO - Streamlit app started
+2025-03-26 11:40:37,283 - INFO - Executing query: 
+        SELECT order_id, 
+               order_item_id, 
+               product_id, 
+               seller_id, 
+               shipping_limit_date, 
+               price, 
+               freight_value
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_items_dataset`
+        ORDER BY order_id;
+        
+2025-03-26 11:41:02,970 - INFO - Streamlit app started
+2025-03-26 11:41:02,975 - INFO - Executing query: 
+        SELECT order_id, 
+            COALESCE(payment_type, 'Unknown') AS payment_type, 
+            payment_installments, 
+            payment_value
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_payments_dataset`
+        ORDER BY payment_value DESC;
+        
+2025-03-26 11:41:13,096 - INFO - Streamlit app started
+2025-03-26 11:41:13,098 - INFO - Executing query: 
+        SELECT review_id, order_id, review_score, review_comment_title, 
+               review_comment_message, review_creation_date, review_answer_timestamp
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset`
+        ORDER BY review_creation_date DESC;
+        
+2025-03-26 11:41:25,251 - INFO - Streamlit app started
+2025-03-26 11:41:25,257 - INFO - Executing query: 
+        SELECT order_id, customer_id, order_status, order_purchase_timestamp, 
+               order_approved_at, order_delivered_carrier_date, 
+               order_delivered_customer_date, order_estimated_delivery_date
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset`
+        ORDER BY order_purchase_timestamp DESC;
+        
+2025-03-26 11:41:39,245 - INFO - Streamlit app started
+2025-03-26 11:41:43,720 - INFO - Streamlit app started
+2025-03-26 11:41:43,749 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:42:35,213 - INFO - Streamlit app started
+2025-03-26 11:42:36,851 - INFO - Streamlit app started
+2025-03-26 11:43:10,833 - INFO - Streamlit app started
+2025-03-26 11:43:43,550 - INFO - Streamlit app started
+2025-03-26 11:48:20,535 - INFO - Streamlit app started
+2025-03-26 11:48:20,563 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:48:56,520 - INFO - Streamlit app started
+2025-03-26 11:48:56,539 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:48:56,544 - INFO - Executing query: 
+        SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset` WHERE order_status = 'shipped' GROUP BY order_date ORDER BY order_date
+2025-03-26 11:49:01,087 - INFO - Streamlit app started
+2025-03-26 11:49:01,100 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:49:01,103 - INFO - Executing query: 
+        SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_orders_dataset` WHERE order_status = 'canceled' GROUP BY order_date ORDER BY order_date
+2025-03-26 11:49:14,538 - INFO - Streamlit app started
+2025-03-26 11:49:14,553 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:49:20,692 - INFO - Streamlit app started
+2025-03-26 11:49:20,707 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:49:32,031 - INFO - Streamlit app started
+2025-03-26 11:49:32,059 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:49:32,837 - INFO - Executing query: 
+        SELECT product_category_name, COUNT(product_id) AS product_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_products_dataset`
+        GROUP BY product_category_name ORDER BY product_count DESC LIMIT 3
+    
+2025-03-26 11:49:37,393 - INFO - Streamlit app started
+2025-03-26 11:49:37,417 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 11:49:37,708 - INFO - Streamlit app started
+2025-03-26 11:49:37,723 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:03:50,746 - INFO - Streamlit app started
+2025-03-26 12:03:50,762 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:04:16,481 - INFO - Streamlit app started
+2025-03-26 12:04:16,499 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:13:57,621 - INFO - Streamlit app started
+2025-03-26 12:13:57,640 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:14:01,884 - INFO - Streamlit app started
+2025-03-26 12:14:01,904 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:14:03,643 - INFO - Executing query: 
+        SELECT p.product_id,p.product_category_name, COUNT(r.review_id) AS review_count
+        FROM `valued-ceiling-454014-a9.sam1.olist_order_reviews_dataset` r
+        JOIN `valued-ceiling-454014-a9.sam1.olist_order_items_dataset` oi ON r.order_id = oi.order_id
+        JOIN `valued-ceiling-454014-a9.sam1.olist_products_dataset` p ON oi.product_id = p.product_id
+        GROUP BY p.product_id, p.product_category_name
+        ORDER BY review_count DESC
+        LIMIT 5
+    
+2025-03-26 12:14:13,543 - INFO - Streamlit app started
+2025-03-26 12:14:18,359 - INFO - Streamlit app started
+2025-03-26 12:14:22,818 - INFO - Streamlit app started
+2025-03-26 12:14:24,919 - INFO - Streamlit app started
+2025-03-26 12:14:26,221 - INFO - Streamlit app started
+2025-03-26 12:14:28,253 - INFO - Streamlit app started
+2025-03-26 12:14:28,957 - INFO - Streamlit app started
+2025-03-26 12:14:39,933 - INFO - Streamlit app started
+2025-03-26 12:16:15,593 - INFO - Streamlit app started
+2025-03-26 12:16:18,853 - INFO - Streamlit app started
+2025-03-26 12:16:26,826 - INFO - Streamlit app started
+2025-03-26 12:16:30,508 - INFO - Streamlit app started
+2025-03-26 12:16:46,175 - INFO - Streamlit app started
+2025-03-26 12:17:03,105 - INFO - Streamlit app started
+2025-03-26 12:17:08,341 - INFO - Streamlit app started
+2025-03-26 12:17:11,865 - INFO - Streamlit app started
+2025-03-26 12:17:26,336 - INFO - Streamlit app started
+2025-03-26 12:17:38,924 - INFO - Streamlit app started
+2025-03-26 12:17:41,186 - INFO - Streamlit app started
+2025-03-26 12:17:43,679 - INFO - Streamlit app started
+2025-03-26 12:17:43,693 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:44:10,033 - INFO - Streamlit app started
+2025-03-26 12:44:10,050 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:45:02,494 - INFO - Streamlit app started
+2025-03-26 12:45:02,506 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:45:59,702 - INFO - Streamlit app started
+2025-03-26 12:45:59,717 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:46:36,748 - INFO - Streamlit app started
+2025-03-26 12:46:36,762 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:47:38,433 - INFO - Streamlit app started
+2025-03-26 12:47:38,452 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:48:05,254 - INFO - Streamlit app started
+2025-03-26 12:48:12,339 - INFO - Streamlit app started
+2025-03-26 12:48:12,357 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:48:26,791 - INFO - Streamlit app started
+2025-03-26 12:49:47,714 - INFO - Streamlit app started
+2025-03-26 12:49:51,349 - INFO - Streamlit app started
+2025-03-26 12:50:21,008 - INFO - Streamlit app started
+2025-03-26 12:50:34,220 - INFO - Streamlit app started
+2025-03-26 12:50:39,962 - INFO - Streamlit app started
+2025-03-26 12:50:41,817 - INFO - Streamlit app started
+2025-03-26 12:50:44,006 - INFO - Streamlit app started
+2025-03-26 12:50:48,742 - INFO - Streamlit app started
+2025-03-26 12:50:50,825 - INFO - Streamlit app started
+2025-03-26 12:52:25,225 - INFO - Streamlit app started
+2025-03-26 12:52:33,956 - INFO - Streamlit app started
+2025-03-26 12:52:36,220 - INFO - Streamlit app started
+2025-03-26 12:52:39,385 - INFO - Streamlit app started
+2025-03-26 12:52:44,076 - INFO - Streamlit app started
+2025-03-26 12:52:54,765 - INFO - Streamlit app started
+2025-03-26 12:52:57,668 - INFO - Streamlit app started
+2025-03-26 12:53:00,480 - INFO - Streamlit app started
+2025-03-26 12:53:26,973 - INFO - Streamlit app started
+2025-03-26 12:53:26,985 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:54:16,527 - INFO - Streamlit app started
+2025-03-26 12:54:16,547 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267
+2025-03-26 12:54:33,809 - INFO - Streamlit app started
+2025-03-26 12:54:38,618 - INFO - Streamlit app started
+2025-03-26 12:54:45,611 - INFO - Streamlit app started
+2025-03-26 12:55:14,267 - INFO - Streamlit app started
+2025-03-26 12:55:14,282 - INFO - Displayed Metrics - Total Orders:    total_orders
+0         99441, Total Revenue:    total_revenue
+0    16008872.12, Total Customers:    total_customers
+0            96096, Avg Order Value:    avg_order_value
+0       160.990267

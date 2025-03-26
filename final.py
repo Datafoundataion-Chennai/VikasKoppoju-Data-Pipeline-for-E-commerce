@@ -29,14 +29,14 @@ def fetch_data(query):
         logging.error(f"Query execution failed: {e}")
         return pd.DataFrame()
     
-st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Select Page", ["Overall Tables", "Individual Tables"])
+st.sidebar.title("🧭 Navigation")
+page = st.sidebar.selectbox("Select Page", ["Dashboard", "Individual Tables"])
 
-st.title("Event-driven Data Pipeline for E-commerce ✨")
+st.title("🛒 Event-driven Data Pipeline for E-commerce ✨")
 logging.info("Streamlit app started")
 
-if not page == "Overall Tables":
-    page = st.sidebar.radio("Go to", ["Customers","Geolocation","Order Items","Payments", "Reviews", "Orders","Products"])
+if not page == "Dashboard":
+    page = st.sidebar.radio("Go to", ["Customers","Geolocation","Order Items","Payments", "Reviews", "Orders"])
     
     def Customers():
         st.write("tables")
@@ -51,7 +51,7 @@ if not page == "Overall Tables":
         ORDER BY customer_city;
         """)
 
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
         # Pagination Setup
         records_per_page = 10
         total_pages = math.ceil(len(cus) / records_per_page) if len(cus) > 0 else 1
@@ -73,10 +73,9 @@ if not page == "Overall Tables":
         end_idx = start_idx + records_per_page
         paginated_df = cus.iloc[start_idx:end_idx].reset_index(drop=True)
         
-        # Fix index to start from 1 instead of 0
-        paginated_df.index = range(start_idx + 1, end_idx + 1)
-        if not paginated_df.empty:
-            paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
+        # Fix index to match the number of rows dynamically
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
+        
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
@@ -105,7 +104,7 @@ if not page == "Overall Tables":
         # Rename columns for Streamlit compatibility
         geo = geo.rename(columns={"geolocation_lat": "latitude", "geolocation_lng": "longitude"})
 
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
         records_per_page = 10
         total_pages = math.ceil(len(geo) / records_per_page) if len(geo) > 0 else 1
 
@@ -117,17 +116,17 @@ if not page == "Overall Tables":
         if state_filter != "All":
             geo = geo[geo["geolocation_state"] == state_filter]
 
-        # Pagination
+       
         page_num = st.sidebar.number_input("Page Number", min_value=1, max_value=total_pages, value=1, step=1)
         start_idx = (page_num - 1) * records_per_page
         end_idx = start_idx + records_per_page
         paginated_df = geo.iloc[start_idx:end_idx].reset_index(drop=True)
-        paginated_df.index = range(start_idx + 1, end_idx + 1)
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
 
-        # Display map
+        st.header("📍 Location's of the Customers")
         st.map(geo[["latitude", "longitude"]].dropna())
 
     def OrderItems():
@@ -145,7 +144,7 @@ if not page == "Overall Tables":
         ORDER BY order_id;
         """)
 
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
         records_per_page = 10
         total_pages = math.ceil(len(orders) / records_per_page) if len(orders) > 0 else 1
 
@@ -162,10 +161,15 @@ if not page == "Overall Tables":
         start_idx = (page_num - 1) * records_per_page
         end_idx = start_idx + records_per_page
         paginated_df = orders.iloc[start_idx:end_idx].reset_index(drop=True)
-        paginated_df.index = range(start_idx + 1, end_idx + 1)
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
+        # st.subheader("Revenue Contribution by Sellers")
+        st.subheader("Price Distribution of Products")
+        if not orders.empty:
+            st.bar_chart(orders.groupby("product_id")["price"].sum())
+        
     def Payments():
         st.write("Payments Table")
 
@@ -177,10 +181,9 @@ if not page == "Overall Tables":
         FROM `{PROJECT_ID}.{DATASET_ID}.olist_order_payments_dataset`
         ORDER BY payment_value DESC;
         """)
+ 
 
-        st.write("Columns in Payments Dataset:", payments.columns.tolist())  # Debugging step
-
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
         records_per_page = 10
         total_pages = math.ceil(len(payments) / records_per_page) if len(payments) > 0 else 1
 
@@ -193,10 +196,14 @@ if not page == "Overall Tables":
         start_idx = (page_num - 1) * records_per_page
         end_idx = start_idx + records_per_page
         paginated_df = payments.iloc[start_idx:end_idx].reset_index(drop=True)
-        paginated_df.index = range(start_idx + 1, end_idx + 1)
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
+        st.subheader("Total Payment Value by Payment Type")
+        if not payments.empty:
+            payment_summary = payments.groupby("payment_type")["payment_value"].sum()
+            st.bar_chart(payment_summary)
 
     def Reviews():
         st.write("Reviews Table")
@@ -208,7 +215,7 @@ if not page == "Overall Tables":
         ORDER BY review_creation_date DESC;
         """)
 
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
         records_per_page = 10
         total_pages = math.ceil(len(reviews) / records_per_page) if len(reviews) > 0 else 1
 
@@ -221,10 +228,14 @@ if not page == "Overall Tables":
         start_idx = (page_num - 1) * records_per_page
         end_idx = start_idx + records_per_page
         paginated_df = reviews.iloc[start_idx:end_idx].reset_index(drop=True)
-        paginated_df.index = range(start_idx + 1, end_idx + 1)
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
+        st.subheader("Review Score Distribution")
+        if not reviews.empty:
+            review_counts = reviews["review_score"].value_counts().sort_index()
+            st.bar_chart(review_counts)
     def Orders():
         st.write("Orders Table")
 
@@ -236,7 +247,7 @@ if not page == "Overall Tables":
         ORDER BY order_purchase_timestamp DESC;
         """)
 
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
         records_per_page = 10
         total_pages = math.ceil(len(orders) / records_per_page) if len(orders) > 0 else 1
 
@@ -249,16 +260,20 @@ if not page == "Overall Tables":
         start_idx = (page_num - 1) * records_per_page
         end_idx = start_idx + records_per_page
         paginated_df = orders.iloc[start_idx:end_idx].reset_index(drop=True)
-        paginated_df.index = range(start_idx + 1, end_idx + 1)
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
+        st.subheader("Order Status Distribution")
+        if not orders.empty:
+            order_counts = orders["order_status"].value_counts()
+            st.bar_chart(order_counts)
     def Products():
         st.title("Products Table")
 
         
         query = f"""
-        SELECT * FROM `{PROJECT_ID}.{DATASET_ID}.olist_products_dataset`
+        SELECT * FROM ``{PROJECT_ID}.{DATASET_ID}.olist_products_dataset`
         ORDER BY product_category_name;
         """
 
@@ -269,7 +284,7 @@ if not page == "Overall Tables":
             st.warning("No product data available.")
             return  # Exit function early
 
-        st.sidebar.title("Filters")
+        st.sidebar.title("🔍 Filters")
 
         #  Check if the column exists before filtering
         if "product_category_name" in products.columns:
@@ -296,7 +311,7 @@ if not page == "Overall Tables":
         paginated_df = products.iloc[start_idx:end_idx].reset_index(drop=True)
 
         #  Fix index to start from 1 instead of 0
-        paginated_df.index = range(start_idx + 1, min(end_idx + 1, len(products) + 1))
+        paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)
@@ -334,8 +349,8 @@ if not page == "Overall Tables":
         Reviews()
     elif page == "Orders":
         Orders()
-    elif page == "Products":
-        Products()
+    # elif page == "Products":
+    #     Products()
 
 else:
     
@@ -357,11 +372,11 @@ else:
                     f"Total Customers: {total_customers}, Avg Order Value: {avg_order_value}")
 
     # Sidebar Filters
-    st.sidebar.header("Filters")
+    st.sidebar.header("🔍 Filters")
     order_status_options = ["All", "delivered", "shipped", "canceled"]
     selected_status = st.sidebar.selectbox("Filter by Order Status", order_status_options)
 
-    date_range = st.sidebar.date_input("Select Date Range", [])
+    date_range = st.sidebar.date_input("📅 Select Date Range", [])
 
     # Orders Over Time
     st.header("📅 Orders Over Time")
@@ -504,7 +519,7 @@ else:
 
 
 
-    st.header("Top 10 Orders by Payment Value")
+    st.header("💵 Top 10 Orders by Payment Value")
     # Fetch Top 10 Orders by Payment Value
     top_ten_orders = fetch_data(f"""
         SELECT o.order_id, p.product_category_name, SUM(op.payment_value) AS total_payment_value
@@ -538,5 +553,7 @@ else:
         st.pyplot(fig_top10)
     else:
         st.warning("No data available for the top 10 orders by payment value.")
+    st.header("📄 Databse Schema")
+    st.image("./data/image/ERcolor.png")
 
 

@@ -72,9 +72,11 @@ if not page == "Overall Tables":
         start_idx = (page_num - 1) * records_per_page
         end_idx = start_idx + records_per_page
         paginated_df = cus.iloc[start_idx:end_idx].reset_index(drop=True)
-
+        
         # Fix index to start from 1 instead of 0
         paginated_df.index = range(start_idx + 1, end_idx + 1)
+        if not paginated_df.empty:
+            paginated_df.index = range(start_idx + 1, start_idx + 1 + len(paginated_df))
 
         st.write(f"Showing page {page_num} of {total_pages}")
         st.dataframe(paginated_df)

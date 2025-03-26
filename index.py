@@ -51,12 +51,7 @@ logging.info(f"Displayed Metrics - Total Orders: {total_orders}, Total Revenue: 
                  f"Total Customers: {total_customers}, Avg Order Value: {avg_order_value}")
 
 
-logging.info("Fetching Orders Over Time Data")
-orders_over_time = fetch_data(f"""
-     SELECT DATE(order_purchase_timestamp) AS order_date, COUNT(order_id) AS order_count 
-     FROM `{PROJECT_ID}.{DATASET_ID}.olist_orders_dataset`
-     GROUP BY order_date ORDER BY order_date
-""")
+
 
 
 logging.info("Fetching Orders Over Time Data")
@@ -68,6 +63,8 @@ orders_over_time = fetch_data(f"""
 logging.info("Fetched Orders Over Time Data")
 fig_orders = px.line(orders_over_time, x="order_date", y="order_count",title="📅 Orders Over Time",labels={"order_date": "Order Date", "order_count": "Number of Orders"} )
 st.plotly_chart(fig_orders)
+
+
 
 logging.info("Fetching Revenue Over Time Data")
 revenue_over_time = fetch_data(f"""
